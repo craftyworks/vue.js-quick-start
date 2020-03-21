@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .score { border: black solid 1px;}
+        .warning { background-color: orange; color: purple}
+        .warning-image { width: 18px; height: 18px; top: 5px; position: relative}
+    </style>
+    <script src="https://unpkg.com/vue"></script>
 <body>
-$END$
+<div id="app">
+    <div>
+        score : <input type="text" class="score" v-model.number="score" :class="info">
+        <img src="images/poof.png" class="warning-image" v-show="info.warning">
+    </div>
+</div>
+<script>
+    let model = {
+        score: 0,
+    }
+    new Vue({
+        el: '#app',
+        data: model,
+        methods: {},
+        computed: {
+            info() {
+                let ret = {warning: false}
+                ret.warning = this.score < 100
+                return ret
+            }
+        }
+    })
+</script>
 </body>
 </html>

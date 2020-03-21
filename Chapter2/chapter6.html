@@ -2,9 +2,94 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
+    <style>
+    </style>
 </head>
 <body>
-$END$
+<div id="app">
+    <search-component>
+
+    </search-component>
+    <contact-list :list="userList">
+
+    </contact-list>
+</div>
+
+<template id="searchTemplate">
+    <div>
+        <input type="text" v-model="keyword" @keyup.enter="actionSubmit">
+    </div>
+</template>
+<template id="contactTemplate">
+    <div>
+        <div v-for="item in list" @click="actionSubmit">
+            <img :src="item.photo" :data-name="item.name" :data-phone="item.tel"><p>{{item.address}}</p>
+        </div>
+    </div>
+</template>
+
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/underscore"></script>
+<script>
+
+    Vue.component('search-component', {
+        template: '#searchTemplate',
+        data() {
+            return {
+                keyword: ''
+            }
+        },
+        methods: {
+            actionSubmit() {
+                eventBus.$emit('submit', this.keyword)
+                this.keyword = ''
+            }
+        },
+        created() {
+            let vm = this
+            eventBus.$on('user-click', function(name, phone) {
+                console.log(this)
+                vm.keyword = name
+            })
+        }
+    })
+
+    Vue.component('contact-list', {
+        template: '#contactTemplate',
+        props:['list'],
+        methods: {
+            actionSubmit(e) {
+                eventBus.$emit('user-click', e.target.dataset.name, e.target.dataset.phone)
+            }
+        }
+    })
+
+    let eventBus = new Vue()
+    let model = {
+        userList: []
+    }
+    let vm = new Vue({
+        el: '#app',
+        data: model,
+        methods: {
+            fetchList(keyword) {
+                axios.get("http://sample.bmaster.kro.kr/contacts/search/" + keyword)
+                    .then(function(result) {
+                        console.log(result.data)
+                        model.userList = result.data
+                    })
+            },
+            userInfo(name, phone) {
+                alert(name + ', ' + phone)
+            }
+        },
+        created() {
+            eventBus.$on('submit', this.fetchList)
+            eventBus.$on('user-click', this.userInfo)
+        }
+    })
+</script>
 </body>
 </html>
