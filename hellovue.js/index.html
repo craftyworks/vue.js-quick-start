@@ -7,15 +7,42 @@
 </head>
 <body>
 <div id="app">
-    <input type="text" v-model="message">
-    <p v-once>{{message}}</p>
+    <input type="number" v-model="number">
+    <p>sum : {{sum()}}</p>
+    <p>cumputed sum : {{computed_sum}}</p>
 </div>
 <script>
-    new Vue({
+    let model = {
+        number: 0
+    }
+    let vm = new Vue({
         el: '#app',
-        data: {
-            message: 'Hello'
+        data: model,
+        computed: {
+            computed_sum() {
+                console.log("컴퓨티드")
+                let sum = 0
+                for(let i = 0; i < this.number; i++) {
+                    sum += i
+                }
+                return sum
+            }
         },
+        watch: {
+            number(value) {
+                console.log("워치 " + value +', ' + this.number)
+            }
+        },
+        methods: {
+            sum() {
+                console.log("메소드")
+                let sum = 0
+                for(let i = 0; i < this.number; i++) {
+                    sum += i
+                }
+                return sum
+            }
+        }
     })
 </script>
 </body>

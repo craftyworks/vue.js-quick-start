@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/underscore"></script>
+    <style>
+        [v-cloak] {display: none}
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+
+    <input type="text" v-model="search" placeholder="input characters">
+
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>전화번호</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in userList">
+            <td>{{item.no}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.tel}}</td>
+        </tr>
+
+        <tr v-show="isProcessing">
+            <td colspan=3>No data</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+
+    let model = {
+        search: '',
+        isProcessing: false,
+        userList: []
+    }
+    let app = new Vue({
+        el: '#app',
+        data: model,
+        watch: {
+            search(value) {
+                if(value.length > 1) {
+                    this.fetchUser()
+                } else {
+                    this.userList = []
+                }
+            }
+        },
+        methods: {
+            fetchUser: _.debounce(
+                function() {
+                    this.userList = []
+                    this.isProcessing = true
+                    console.log('axis ' + this.search)
+                    axios.get('http://sample.bmaster.kro.kr/contacts_long/search/' + this.search)
+                        .then(function(response) {
+                            model.userList = response.data
+                            model.isProcessing = false
+                        })
+                }, 300)
+        }
+    })
+</script>
+</body>
+</html>
