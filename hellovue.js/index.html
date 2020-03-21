@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Welcome to Vue</title>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="message">
+    <p v-once>{{message}}</p>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello'
+        },
+    })
+</script>
+</body>
+</html>
