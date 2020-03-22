@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
+    mode: 'development',
     entry: './src/index.js',
     output: {
         filename: 'main.js',
@@ -16,7 +17,10 @@ module.exports = {
             }
         ]
     },
-    optimization: {
-        minimize: true
+    devServer: {
+        contentBase: './public/',
+        port: 8088,
+        historyApiFallback: true,
+        watchContentBase: true
     }
 }

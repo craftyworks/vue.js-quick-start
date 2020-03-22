@@ -1,5 +1,5 @@
 let calc = {
-    add(x, y) {
+    add2(x, y) {
         return x + y
     },
     multiply(x, y) {
