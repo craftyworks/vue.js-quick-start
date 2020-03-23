@@ -41,7 +41,8 @@ export default {
     }
   },
   mounted() {
-    // this.$refs.name.focus()
+    console.log(this.$refs)
+    this.$refs.name.focus()
   },
   computed: {
     btnText() {

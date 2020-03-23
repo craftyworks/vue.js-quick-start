@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import eventBus from './EventBus'
+  import Constant from "./Constant";
 
   export default {
     name: "input-todo",
@@ -16,8 +16,8 @@
       }
     },
     methods: {
-      addTodo(e) {
-        eventBus.$emit('add-todo', this.todo)
+      addTodo() {
+        this.$store.commit(Constant.ADD_TODO, {todo: this.todo})
         this.todo = ''
       }
     }

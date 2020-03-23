@@ -6,6 +6,7 @@
     </div>
     <component :is="currentView" :contact="contact"></component>
     <contact-list :contactList="contactList"></contact-list>
+
     <paginate ref="pagebuttons"
               :page-count="totalpage"
               :page-range="7"

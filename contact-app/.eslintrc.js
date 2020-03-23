@@ -28,5 +28,7 @@ module.exports = {
 
     // 나의 custom
     'space-before-function-paren': ['error', 'never'],
-    'no-trailing-spaces': ['error', { 'skipBlankLines': true, 'ignoreComments': true }]}
+    'no-trailing-spaces': ['error', {'skipBlankLines': true, 'ignoreComments': true}],
+    'no-unused-vars': 'warn'
+  },
 }

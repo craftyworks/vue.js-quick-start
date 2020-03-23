@@ -35,6 +35,7 @@
 import eventBus from '../EventBus'
 
 export default {
+  name: 'contactList',
   props: ['contactList'],
   methods: {
     addContact() {
