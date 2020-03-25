@@ -54,6 +54,5 @@ export default new Vuex.Store({
       state.currentRegion = payload.region
     },
   },
-  actions: {},
   modules: {},
 })

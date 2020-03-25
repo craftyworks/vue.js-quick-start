@@ -16,16 +16,17 @@
   export default {
     name: "todo-list",
     computed: mapState(['todolist']),
-    methods: _.extend({
-        checked(done) {
-          return {checked: done}
-        }
+    methods: {
+      checked(done) {
+        return {checked: done}
       },
-      mapMutations([
-        Constant.DELETE_TODO,
-        Constant.DONE_TOGGLE
-      ])
-    )
+      deleteTodo(payload) {
+        this.$store.dispatch(Constant.DELETE_TODO, payload)
+      },
+      doneToggle(payload) {
+        this.$store.dispatch(Constant.DONE_TOGGLE, payload)
+      }
+    },
   }
 </script>
 
