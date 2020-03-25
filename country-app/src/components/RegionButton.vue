@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import _ from 'lodash'
 import Constant from '../Constant'
 
@@ -21,11 +21,10 @@ export default {
       isSelected(region) {
         return { selected: region === this.currentRegion }
       },
-      changeRegion(payload) {
-        console.log('change:', payload)
-        this.$store.commit(Constant.CHANGE_REGION, payload)
-      },
     },
+    mapMutations([
+      Constant.CHANGE_REGION,
+    ]),
   ),
 }
 </script>
