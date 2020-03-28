@@ -9,26 +9,10 @@ export default new Vuex.Store({
   state: {
     currentRegion: 'all',
     countries: [
-      {
-        no: 1,
-        name: '미국',
-        region: 'america',
-      },
-      {
-        no: 2,
-        name: '프랑스',
-        region: 'europe',
-      },
-      {
-        no: 3,
-        name: '영국',
-        region: 'europe',
-      },
-      {
-        no: 4,
-        name: '중국',
-        region: 'asia',
-      },
+      { no: 1, name: '미국', region: 'america' },
+      { no: 2, name: '프랑스', region: 'europe' },
+      { no: 3, name: '영국', region: 'europe' },
+      { no: 4, name: '중국', region: 'asia' },
     ],
   },
   getters: {
