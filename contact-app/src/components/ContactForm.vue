@@ -33,6 +33,12 @@ import {mapState} from 'vuex'
 import _ from 'lodash'
 
 export default {
+  props: ['no'],
+  data() {
+    return {
+      mode: 'add',
+    }
+  },
   computed: _.extend(
     {
       btnText() {
@@ -40,21 +46,36 @@ export default {
       },
       headingText() {
         return this.mode === 'update' ? '연락처 변경' : '새로운 연락처 추가'
-      }
-    }, mapState(['mode', 'contact'])
+      },
+    }, mapState(['contact', 'contactlist']),
   ),
+  mounted() {
+    console.log('contactForm', 'mounted')
+
+    let cr = this.$router.currentRoute
+    if (cr.fullPath.indexOf('/add') > -1) {
+      this.mode = 'add'
+      this.$store.dispatch(constant.INITIALIZE_CONTACT_ONE)
+    } else if (cr.fullPath.indexOf('/update') > -1) {
+      this.mode = 'update'
+      console.log('update', this.no)
+      this.$store.dispatch(constant.FETCH_CONTACT_ONE, {no: this.no})
+    }
+  },
   methods: {
     submitEvent() {
       if (this.mode === 'update') {
         this.$store.dispatch(constant.UPDATE_CONTACT)
+        this.$router.push({name: 'contacts', query: {page: this.contactlist.pageno}})
       } else {
         this.$store.dispatch(constant.ADD_CONTACT)
+        this.$router.push({name: 'contacts', query: {page: 1}})
       }
     },
     cancelEvent() {
-      this.$store.dispatch(constant.CANCEL_FORM)
-    }
-  }
+      this.$router.push({name: 'contacts', query: {page: this.contactlist.pageno}})
+    },
+  },
 }
 </script>
 

@@ -16,8 +16,8 @@
         </div>
         <div class="form-group">
           <div>&nbsp;</div>
-          <button class="btn btn-primary" @click="submitPhoto" >변경</button>
-          <button class="btn btn-primary" @click="cancelPhoto" >취소</button>
+          <button class="btn btn-primary" @click="submitPhoto">변경</button>
+          <button class="btn btn-primary" @click="cancelPhoto">취소</button>
         </div>
       </form>
     </div>
@@ -30,16 +30,21 @@ import {mapState} from 'vuex'
 
 export default {
   name: 'updatePhoto',
-  computed: mapState(['contact']),
+  props: ['no'],
+  computed: mapState(['contact', 'contactlist']),
+  mounted() {
+    this.$store.dispatch(constant.FETCH_CONTACT_ONE, {no: this.no})
+  },
   methods: {
     cancelPhoto() {
-      this.$store.dispatch(constant.CANCEL_FORM)
+      this.$router.push({name: 'contacts', query: {page: this.contactlist.pageno}})
     },
     submitPhoto() {
       let file = this.$refs.photofile.files[0]
       this.$store.dispatch(constant.UPDATE_PHOTO, {no: this.contact.no, file})
-    }
-  }
+      this.$router.push({name: 'contacts', query: {page: this.contactlist.pageno}})
+    },
+  },
 }
 </script>
 
@@ -65,7 +70,19 @@ export default {
     padding: 10px 10px 10px 10px;
   }
 
-  img.thumbnail { width: 300px; height: 300px; margi-top: auto; margin-bottom: auto; display: block; cursor: pointer}
+  img.thumbnail {
+    width: 300px;
+    height: 300px;
+    margi-top: auto;
+    margin-bottom: auto;
+    display: block;
+    cursor: pointer
+  }
 
-  .form .button {background: #2b798d; padding:  8px 15px 8px 15px; border: none; color: #fff}
+  .form .button {
+    background: #2b798d;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #fff
+  }
 </style>
