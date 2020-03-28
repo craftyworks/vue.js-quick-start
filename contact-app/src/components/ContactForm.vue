@@ -28,36 +28,31 @@
 </template>
 
 <script>
-import eventBus from '../EventBus'
+import constant from '../constant'
+import {mapState} from 'vuex'
+import _ from 'lodash'
 
 export default {
-  props: {
-    mode: {type: String, default: 'add'},
-    contact: {
-      type: Object,
-      default() {
-        return {no: '', name: '', tel: '', address: '', photo: ''}
+  computed: _.extend(
+    {
+      btnText() {
+        return this.mode === 'update' ? '수정' : '추가'
+      },
+      headingText() {
+        return this.mode === 'update' ? '연락처 변경' : '새로운 연락처 추가'
       }
-    }
-  },
-  mounted() {
-    console.log(this.$refs)
-    this.$refs.name.focus()
-  },
-  computed: {
-    btnText() {
-      return this.mode === 'update' ? '수정' : '추가'
-    },
-    headingText() {
-      return this.mode === 'update' ? '연락처 변경' : '새로운 연락처 추가'
-    }
-  },
+    }, mapState(['mode', 'contact'])
+  ),
   methods: {
     submitEvent() {
-      eventBus.$emit(this.mode === 'update' ? 'updateSubmit' : 'addSubmit', this.contact)
+      if (this.mode === 'update') {
+        this.$store.dispatch(constant.UPDATE_CONTACT)
+      } else {
+        this.$store.dispatch(constant.ADD_CONTACT)
+      }
     },
     cancelEvent() {
-      eventBus.$emit('cancel')
+      this.$store.dispatch(constant.CANCEL_FORM)
     }
   }
 }
@@ -85,5 +80,10 @@ export default {
     padding: 10px 10px 10px 10px;
   }
 
-  .form .button {background: #2b798d; padding:  8px 15px 8px 15px; border: none; color: #fff}
+  .form .button {
+    background: #2b798d;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #fff
+  }
 </style>

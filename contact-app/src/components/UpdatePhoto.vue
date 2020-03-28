@@ -25,19 +25,19 @@
 </template>
 
 <script>
-
-import eventBus from '../EventBus'
+import constant from '../constant'
+import {mapState} from 'vuex'
 
 export default {
   name: 'updatePhoto',
-  props: ['contact'],
+  computed: mapState(['contact']),
   methods: {
     cancelPhoto() {
-      eventBus.$emit('cancel')
+      this.$store.dispatch(constant.CANCEL_FORM)
     },
     submitPhoto() {
       let file = this.$refs.photofile.files[0]
-      eventBus.$emit('updatePhoto', this.contact.no, file)
+      this.$store.dispatch(constant.UPDATE_PHOTO, {no: this.contact.no, file})
     }
   }
 }
@@ -65,7 +65,7 @@ export default {
     padding: 10px 10px 10px 10px;
   }
 
-  img.thumbnail { width: 48px; height: 48px; margi-top: auto; margin-bottom: auto; display: block; cursor: pointer}
+  img.thumbnail { width: 300px; height: 300px; margi-top: auto; margin-bottom: auto; display: block; cursor: pointer}
 
   .form .button {background: #2b798d; padding:  8px 15px 8px 15px; border: none; color: #fff}
 </style>

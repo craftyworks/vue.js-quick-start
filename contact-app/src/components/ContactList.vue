@@ -15,7 +15,7 @@
         </tr>
         </thead>
         <tbody id="contacts">
-        <tr v-for="contact in contactList.contacts" :key="contact.no">
+        <tr v-for="contact in contactlist.contacts" :key="contact.no">
           <td>{{contact.name}}</td>
           <td>{{contact.tel}}</td>
           <td>{{contact.address}}</td>
@@ -32,25 +32,25 @@
 </template>
 
 <script>
-import eventBus from '../EventBus'
+import constant from '../constant'
+import {mapState} from 'vuex'
 
 export default {
-  name: 'contactList',
-  props: ['contactList'],
+  computed: mapState(['contactlist']),
   methods: {
     addContact() {
-      eventBus.$emit('addContactForm')
+      this.$store.dispatch(constant.ADD_CONTACT_FORM)
     },
     editContact(no) {
-      eventBus.$emit('editContactForm', no)
+      this.$store.dispatch(constant.EDIT_CONTACT_FORM, {no})
     },
     deleteContact(no) {
       if (confirm('are you sure?') === true) {
-        eventBus.$emit('deleteContact', no)
+        this.$store.dispatch(constant.DELETE_CONTACT, {no})
       }
     },
     editPhoto(no) {
-      eventBus.$emit('editPhoto', no)
+      this.$store.dispatch(constant.EDIT_PHOTO_FORM, {no})
     }
   }
 }
