@@ -9,7 +9,9 @@
         <router-link to="/contacts" class="btn btn-info menu">Contacts</router-link>
       </div>
     </div>
-    <router-view></router-view>
+    <transition name="flip" mode="out-in">
+      <router-view></router-view>
+    </transition>
     <loading v-show="isLoading"></loading>
   </div>
 </template>
@@ -21,12 +23,13 @@ import {mapState} from 'vuex'
 export default {
   name: 'App',
   components: {Loading},
-  computed: mapState(['isLoading'])
+  computed: mapState(['isLoading']),
 }
 </script>/
 
 <style scoped>
   @import url("https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.css");
+
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -35,7 +38,18 @@ export default {
     color: #2c3e50;
     margin-top: 60px;
   }
+
   .menu {
     width: 100px;
+  }
+  .flip-enter-active {
+    transition: all .4s ease-in-out;
+  }
+  .flip-leave-active {
+    transition: all .4s ease-in-out;
+  }
+  .flip-enter, .flip-leave-to {
+    transform: scaleY(0) translateZ(0);
+    opacity: 0;
   }
 </style>
